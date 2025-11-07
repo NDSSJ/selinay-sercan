@@ -653,3 +653,29 @@ spinBtn.addEventListener("click", spinWheel);
         loadCurrent();
     });
 })();
+
+// ====== SONG-PANEL (Klick auf Cover spielt Song) ======
+const songCards = document.querySelectorAll(".song-card");
+const audioPlayer = document.getElementById("audio-player");
+
+if (songCards && audioPlayer) {
+    let currentSrc = null;
+
+    songCards.forEach(card => {
+        card.addEventListener("click", () => {
+            const src = card.dataset.audio;
+            if (!src) return;
+
+            // wenn man auf denselben Song nochmal klickt -> pausieren
+            if (currentSrc === src && !audioPlayer.paused) {
+                audioPlayer.pause();
+                return;
+            }
+
+            audioPlayer.src = src;
+            audioPlayer.play();
+            currentSrc = src;
+        });
+    });
+}
+
