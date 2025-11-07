@@ -38,7 +38,7 @@
                     <i class="fa-solid fa-heart"></i><span>Wie sehr liebe ich dich?</span>
                 </button>
                 <button class="menu-item" data-target="panel-platzhalter3">
-                    <i class="fa-solid fa-heart"></i><span>Wie sehr liebe ich dich?</span>
+                    <i class="fa-solid fa-heart"></i><span>Wer hat das gesagt?</span>
                 </button>
             </nav>
         </aside>
@@ -97,6 +97,14 @@
                     ansehen kannst, aber es klappt einfach nicht omg... Ich hoffe ich kriege das noch hin, sonst ist
                     alles umsonst gewesen
 
+                </p>
+
+                <p> (06.11.2025)
+                    <br> Nach knapp einer Woche bin ich endlich auf die Lösung gekommen wie ich die Bilder anzeigen
+                    lassen kann. Deswegen mache ich nun weiter selis. Heute haben wir Game of Thrones geguckt und du
+                    hast mich so ausgefragt was ich tue undso nh hilfe wie kann man so nerven HAHAHAHAHHAHA.
+                    <br> Du hast safe was geahnt, wenn du ChatGPT abcheckst oder so dann weißt du ALLES. Insallah tust
+                    du es nicht, ich kann es nicht verhindern...
                 </p>
 
 
@@ -618,6 +626,38 @@
                     <span id="progressText">1%</span>
                 </div>
             </div>
+
+            <!-- Panel: Karteikarten-Spiel -->
+            <section id="panel-platzhalter3" class="panel">
+                <h2>Wer hat das gesagt? 🧠</h2>
+                <p>Rate, von wem die Nachricht war – und aus welchem Jahr.</p>
+
+                <div class="quiz-card">
+                    <p id="quizText" class="quiz-text">…</p>
+
+                    <div class="quiz-options">
+                        <label>
+                            <input type="radio" name="guessPerson" value="selinay">
+                            Selinay
+                        </label>
+                        <label>
+                            <input type="radio" name="guessPerson" value="sercan">
+                            Sercan
+                        </label>
+                    </div>
+
+                    <label for="guessYear" class="quiz-label">Jahr</label>
+                    <input id="guessYear" type="number" class="quiz-input" placeholder="2021" min="2019" max="2035">
+
+                    <div class="quiz-buttons">
+                        <button id="checkQuote" class="quiz-btn">Auflösen</button>
+                        <button id="nextQuote" class="quiz-btn quiz-btn-secondary">Nächste</button>
+                    </div>
+
+                    <p id="quizResult" class="quiz-result"></p>
+                </div>
+            </section>
+
 
 
         </main>

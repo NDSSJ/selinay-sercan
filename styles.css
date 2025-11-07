@@ -666,3 +666,63 @@ footer {
     min-height: 1.5rem;
     margin-left: -80px;
 }
+
+/* =================== Karteikarten-Spiel =================== */
+.quiz-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem 1.4rem;
+    max-width: 520px;
+}
+
+.quiz-text {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.quiz-options {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: .75rem;
+}
+
+.quiz-label {
+    display: block;
+    margin-bottom: .3rem;
+}
+
+.quiz-input {
+    width: 140px;
+    padding: .4rem .55rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    margin-bottom: .9rem;
+}
+
+.quiz-buttons {
+    display: flex;
+    gap: .6rem;
+    margin-bottom: .6rem;
+}
+
+.quiz-btn {
+    background: linear-gradient(90deg, #ff1e6a, #ff4d8f);
+    border: none;
+    border-radius: 9999px;
+    padding: .4rem 1.1rem;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.quiz-btn-secondary {
+    background: #0f766e;
+}
+
+.quiz-result {
+    min-height: 1.4rem;
+}
