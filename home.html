@@ -28,18 +28,27 @@
                 <button class="menu-item active" data-target="panel-willkommen">
                     <i class="fa-solid fa-house"></i><span>Welcomeee</span>
                 </button>
+
                 <button class="menu-item" data-target="panel-slideshow">
                     <i class="fa-solid fa-images"></i><span>Slideshow</span>
                 </button>
+
                 <button class="menu-item" data-target="panel-wheel">
                     <i class="fa-solid fa-clover"></i><span>Glücksrad</span>
                 </button>
+
                 <button class="menu-item" data-target="panel-platzhalter2">
                     <i class="fa-solid fa-heart"></i><span>Wie sehr liebe ich dich?</span>
                 </button>
+
                 <button class="menu-item" data-target="panel-platzhalter3">
                     <i class="fa-solid fa-heart"></i><span>Wer hat das gesagt?</span>
                 </button>
+
+                <button class="menu-item" data-target="panel-songs">
+                    <i class="fa-solid fa-music"></i><span>Unsere Songs</span>
+                </button>
+
             </nav>
         </aside>
 
@@ -96,7 +105,6 @@
                     <br> Jetzt versuche ich gerade die Website online zu stellen, damit du dir die auch von zuhause
                     ansehen kannst, aber es klappt einfach nicht omg... Ich hoffe ich kriege das noch hin, sonst ist
                     alles umsonst gewesen
-
                 </p>
 
                 <p> (06.11.2025)
@@ -104,14 +112,20 @@
                     lassen kann. Deswegen mache ich nun weiter selis. Heute haben wir Game of Thrones geguckt und du
                     hast mich so ausgefragt was ich tue undso nh hilfe wie kann man so nerven HAHAHAHAHHAHA.
                     <br> Du hast safe was geahnt, wenn du ChatGPT abcheckst oder so dann weißt du ALLES. Insallah tust
-                    du es nicht, ich kann es nicht verhindern...
+                    du es nicht, ich kann es nicht verhindern... Ich glaube aber heute hatte ich den durchbruch.
                 </p>
 
-
-
+                <p> (07.11.2025)
+                    <br> Ok ich bin gestern echt lange wach geblieben um dieses Karteikartenspiel zu machen, ich habe
+                    unsere ganz alten Chats gelesen, das hat alles soooo lange gedauert und ich musste immer nachrichten
+                    finden die passen in dieses Spiel.
+                    <br> Das ist unnormal schwer, ich hab echt nicht viel gefunden ich suche aber immer mal wieder
+                    weiter.
+                </p>
 
             </section>
 
+            <!------------------------------------------------------ PANELS ------------------------------------------------------->
             <!-- Panel: Slideshow -->
             <section id="panel-slideshow" class="panel">
                 <h2>Slideshow</h2>
@@ -572,8 +586,6 @@
 
             </section>
 
-
-
             <!-- Panel: Platzhalter 1 -->
             <section id="panel-wheel" class="panel">
                 <h2>Glücksrad 🎯</h2>
@@ -583,7 +595,6 @@
                     <button id="spinBtn" class="spin-btn">Drehen</button>
                     <div class="result" id="wheelResult">–</div>
                 </div>
-
             </section>
 
             <!-- Panel: Platzhalter 2 -->
@@ -657,6 +668,38 @@
                     <p id="quizResult" class="quiz-result"></p>
                 </div>
             </section>
+
+            <section id="panel-songs" class="panel">
+                <h2>Unsere Lieblingssongs 💿</h2>
+                <p>Klick auf ein Cover, dann spielt der Song ab.</p>
+
+                <div class="songs-grid">
+                    <!-- Song 1 -->
+                    <div class="song-card" data-audio="music/song1.mp3">
+                        <img src="Images/song1.jpg" alt="Song 1 Cover">
+                        <h4>Song 1 Titel</h4>
+                        <p>vielleicht: Buray – Mecnur</p>
+                    </div>
+
+                    <!-- Song 2 -->
+                    <div class="song-card" data-audio="music/song2.mp3">
+                        <img src="Images/song2.jpg" alt="Song 2 Cover">
+                        <h4>Song 2 Titel</h4>
+                        <p>Hande Yener – ...</p>
+                    </div>
+
+                    <!-- Song 3 -->
+                    <div class="song-card" data-audio="music/song3.mp3">
+                        <img src="Images/song3.jpg" alt="Song 3 Cover">
+                        <h4>Song 3 Titel</h4>
+                        <p>Unser Lied ♥</p>
+                    </div>
+                </div>
+
+                <!-- versteckte Audios -->
+                <audio id="audio-player"></audio>
+            </section>
+
 
 
 

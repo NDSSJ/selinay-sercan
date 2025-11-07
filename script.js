@@ -548,34 +548,34 @@ spinBtn.addEventListener("click", spinWheel);
             note: "Du hast mir Editierte Fotos geschickt wie du mit kurzen Haaren aussehen würdest, du meintest das ist komisch das einem Jungen zu schicken. Ich war so verliebt, die Fotos waren wow"
         },
         {
-            text: "Komm Discord",
+            text: "Wir werden alt",
             author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
+            year: "2021",
+            note: "schon vor 4 Jahren gesagt weil wir morgens noch müde waren nach dem aufstehen HAHAHAHHA guck uns heute mal an 24/7 müde"
         },
         {
-            text: "Komm Discord",
-            author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
+            text: "Ich will Lasagne",
+            author: "selinay",
+            year: "2021",
+            note: "Was für Kontext, du hast das einfach so um 0Uhr rausgehauen HAHAHAHAHHA"
         },
         {
-            text: "Komm Discord",
-            author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
+            text: "Sana ceza vermek istiyorum",
+            author: "selinay",
+            year: "2022",
+            note: "Mommy? HAHAHAHHA Ich war lange draußen und hab nicht geantwortet dann warst du unnormal sauer, hat was wenn ich das gerade so wieder lese oh"
         },
         {
-            text: "Komm Discord",
-            author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
+            text: "Dann gucken wir Saw 1",
+            author: "selinay",
+            year: "2022",
+            note: " JA DAS HAST DU GESAGT!!!! Mit 20 warst du weniger schisser als jetzt!"
         },
         {
-            text: "Komm Discord",
+            text: "Ich würde kein Tattoo machen wenn wir nur ein Paar sind",
             author: "sercan",
-            year: "2019",
-            note: "Ganz frühe Gaming-Zeit 😎"
+            year: "2021",
+            note: "Ja guuuut, die Meinung hat sich geändert HAHAHAH"
         },
         {
             text: "Komm Discord",
