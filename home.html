@@ -11,6 +11,11 @@
 
 <body>
 
+    <!-- nur fürs Handy sichtbarer Button -->
+    <button id="mobileSidebarToggle" class="mobile-toggle" aria-label="Menü öffnen">
+        ☰
+    </button>
+
     <!-- *** genau EINE Layout-Ebene *** -->
     <div class="layout">
         <!-- *** genau EIN aside mit EINER ID=sidebar *** -->
@@ -23,6 +28,8 @@
                 <h2 class="brand">Menü</h2>
                 <!-- der frühere kleine Toggle-Button wurde entfernt -->
             </div>
+
+
 
             <nav class="menu">
                 <button class="menu-item active" data-target="panel-willkommen">
@@ -671,33 +678,61 @@
 
             <section id="panel-songs" class="panel">
                 <h2>Unsere Lieblingssongs 💿</h2>
-                <p>Klick auf ein Cover, dann spielt der Song für device-width ab.</p>
+                <p>Klick auf eines unserer Songs askim, dann spielt der Song für dich ab.</p>
 
                 <div class="songs-grid">
                     <!-- Song 1 -->
-                    <div class="song-card" data-audio="music/song1.mp3">
-                        <img src="Images/song1.jpg" alt="Song 1 Cover">
-                        <h4>Bana ellerini ver</h4>
+                    <div class="song-card" data-audio="Music/Song1BEV.mp3">
+                        <img src="Images/Song1Cover.png" alt="Song 1 Cover">
+                        <h4>Bist du schon bereit für den Tanz?</h4>
                         <p>Erdogan Özdemir - Bana ellerini ver!</p>
                     </div>
 
                     <!-- Song 2 -->
-                    <div class="song-card" data-audio="music/song2.mp3">
-                        <img src="Images/song2.jpg" alt="Song 2 Cover">
-                        <h4>Song 2 Titel</h4>
+                    <div class="song-card" data-audio="Music/Song2Umb.mp3">
+                        <img src="Images/Song2Cover.png" alt="Song 2 Cover">
+                        <h4>Song 2 Selisss</h4>
                         <p>Hande Yener – ...</p>
                     </div>
 
                     <!-- Song 3 -->
-                    <div class="song-card" data-audio="music/song3.mp3">
-                        <img src="Images/song3.jpg" alt="Song 3 Cover">
+                    <div class="song-card" data-audio="Music/Song3DWAS.mp3">
+                        <img src="Images/Song3Cover.png" alt="Song 3 Cover">
                         <h4>Song 3 Titel</h4>
                         <p>Unser Lied ♥</p>
                     </div>
+
+                    <!-- NEU: Song 4 -->
+                    <div class="song-card" data-audio="Music/Song4DFY.mp3">
+                        <img src="Images/Song4Cover.png" alt="Song 4 Cover">
+                        <h4>Song 4</h4>
+                        <p>Beschreibung…</p>
+                    </div>
+
+                    <!-- NEU: Song 5 -->
+                    <div class="song-card" data-audio="music/song5.mp3">
+                        <img src="Images/song5.jpg" alt="Song 5 Cover">
+                        <h4>Song 5</h4>
+                        <p>Beschreibung…</p>
+                    </div>
+
+                    <!-- NEU: Song 6 -->
+                    <div class="song-card" data-audio="music/song6.mp3">
+                        <img src="Images/song6.jpg" alt="Song 6 Cover">
+                        <h4>Song 6</h4>
+                        <p>Beschreibung…</p>
+                    </div>
+                </div>
+
+                <!-- Lautstärke -->
+                <div class="volume-row">
+                    <label for="volume">Lautstärke</label>
+                    <input id="volume" type="range" min="0" max="1" step="0.01" value="1">
                 </div>
 
                 <!-- versteckte Audios -->
                 <audio id="audio-player"></audio>
+
             </section>
 
 
