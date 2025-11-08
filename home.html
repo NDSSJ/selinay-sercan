@@ -7,9 +7,14 @@
     <title>Meine Seite</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- NEU: Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body>
+
+<body class="needs-auth">
+
 
     <!-- nur fürs Handy sichtbarer Button -->
     <button id="mobileSidebarToggle" class="mobile-toggle" aria-label="Menü öffnen">
@@ -49,12 +54,26 @@
                 </button>
 
                 <button class="menu-item" data-target="panel-platzhalter3">
-                    <i class="fa-solid fa-heart"></i><span>Wer hat das gesagt?</span>
+                    <i class="fa-solid fa-question"></i><span>Wer hat das gesagt?</span>
                 </button>
 
                 <button class="menu-item" data-target="panel-songs">
                     <i class="fa-solid fa-music"></i><span>Unsere Songs</span>
                 </button>
+
+                <button class="menu-item" data-target="panel-countdowns">
+                    <i class="fa-solid fa-hourglass-half"></i><span>Countdowns</span>
+                </button>
+
+                <button class="menu-item" data-target="panel-essen">
+                    <i class="fa-solid fa-bowl-food"></i><span>Wohin essen?</span>
+                </button>
+
+                <button onclick="supabaseLogout()" class="menu-item">
+                    <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+                </button>
+
+
 
             </nav>
         </aside>
@@ -70,11 +89,11 @@
                     einfach wo du das machen kannst wenn du es nicht weißt.
                 </p>
                 <p> <br> Links findest du eine <strong>Slideshow</strong>, da kannst du dich auch etwas durchgucken.</p>
-                <p><br><strong> -------------------------------------------------LESE DIESES TAGEBUCH ERST NACHDEM
+                <p><br><strong> --------------------------------------------LESE DIESES TAGEBUCH ERST NACHDEM
                         DU MIT ALLEM DURCH BIST, SONST WIRST DU GESPOILERT WAS NOCH ALLES
-                        KOMMT!!-------------------------------------------------</strong></p>
+                        KOMMT!!--------------------------------------------</strong></p>
                 <p> Ansonsten viel Spaß mit dem <strong>Tagebuch</strong></p>
-                <p>(23.10.2025)
+                <p> <strong>(23.10.2025)</strong>
                     <br> Ich habe mir jetzt bereits Gedanken um unseren 5. Jahrestag gemacht, was könnte ich dir
                     schenken, was könnte ich vorbereiten. Ich dachte mir ein Album wäre zu klassisch, das haben deine
                     Freundinnen bereits gemacht, auch wenn ein Album von mir um Welten besser wäre, dachte ich dass ich
@@ -87,16 +106,20 @@
                     Sorry für's anlügen jedes Mal. Je mehr ich gerade daran arbeite, desto mehr merke ich wie schwer das
                     ist, sogar mit ChatGPT der den Grundriss für alles gibt, gibt es immer Probleme die ich selber
                     bewältigen muss. <br>Diese Slideshow bringt mein Ende.
+                    <br>
+                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
-                <p> (24.10.2025)
+                <p> <strong>(24.10.2025)</strong>
                     <br> Ich versuche jetzt die Slideshow zuende zu bringen. Ich hab relativ viel Zeit. Ich gehe heute
                     nur
                     noch ins Gym und mit Selis Padel spielen in Düsseldorf. Bis dahin habe ich das hoffentlich
                     geschafft, weil ich glaube es wartet noch bisschen was auf mich.
+                    <br>
+                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
-                <p> (29.10.2025)
+                <p> <strong>(29.10.2025)</strong>
                     <br> Es ist ein paar Tage her dass ich hier dran gearbeitet habe, ich hatte viel Uni zutun und war
                     echt müde die letzten Tage. Heute habe ich einiges geschafft. <br> Ich habe in der Slideshow ein
                     Herz hinzugefügt, welches zwei Namen annimmt und deren Liebe bewertet. Das solltest du aber schon
@@ -114,30 +137,55 @@
                     <br> Jetzt versuche ich gerade die Website online zu stellen, damit du dir die auch von zuhause
                     ansehen kannst, aber es klappt einfach nicht omg... Ich hoffe ich kriege das noch hin, sonst ist
                     alles umsonst gewesen
+                    <br>
+                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
-                <p> (06.11.2025)
+                <p> <strong>(06.11.2025)</strong>
                     <br> Nach knapp einer Woche bin ich endlich auf die Lösung gekommen wie ich die Bilder anzeigen
                     lassen kann. Deswegen mache ich nun weiter selis. Heute haben wir Game of Thrones geguckt und du
                     hast mich so ausgefragt was ich tue undso nh hilfe wie kann man so nerven HAHAHAHAHHAHA.
                     <br> Du hast safe was geahnt, wenn du ChatGPT abcheckst oder so dann weißt du ALLES. Insallah tust
                     du es nicht, ich kann es nicht verhindern... Ich glaube aber heute hatte ich den durchbruch.
+                    <br>
+                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
-                <p> (07.11.2025)
+                <p> <strong>(07.11.2025)</strong>
                     <br> Ok ich bin gestern echt lange wach geblieben um dieses Karteikartenspiel zu machen, ich habe
                     unsere ganz alten Chats gelesen, das hat alles soooo lange gedauert und ich musste immer nachrichten
                     finden die passen in dieses Spiel.
                     <br> Das ist unnormal schwer, ich hab echt nicht viel gefunden ich suche aber immer mal wieder
                     weiter.
+                    <br>
+                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
-                <p> (08.11.2025)
+                <p> <strong>(08.11.2025)</strong>
                     <br> Ich arbeite heute weiter daran. Ich hab heute die Lieder eingefügt und das ganze versucht auf
                     dem Handy auch gut aussehen zu lassen. Es war schwerer als ich dachte und ich hoffe es sieht jetzt
                     wenigstens gut aus.
                     <Br> Ich werde heute auf jeden Fall noch einiges machen, sei es Designtechnisch oder Inhaltlich. Mir
                     müssen nur paar Ideen kommen, das ist gerade das schwerste. Ein richtiges Hin- und her momentan ufff
+                    <br> Ok es geht weiter, der Plan ist es heute noch mehrere Countdowns einzubauen, einmal für den
+                    Jahrestag, für dein Geburtstag, für meinen Geburtstag, für Valentinstag und vielleicht finde ich
+                    noch paar Tage HAHAHAHAH.
+                    <br> OMG UND WÄHREND ICH DAS AUFSCHREIBE HABE ICH NOCH EINE IDEE! Ich programmiere ein Behälter wo
+                    man Karten reintun kann, wo drauf essen steht. Dann kann man aus dem Behälter eine Karte ziehen. Das
+                    was gezogen wird, da gehen wir essen JAAA
+                    <br> Ok ich hab mich eben mit dir getroffen, waren Damla und danach war ich mit Elif Mikado. Seit
+                    Tagen zocken die jungs und ich mache nebenbei diese Seite. Ich hoffe es lohnt sich am ende alles.
+                    <br> Ich habe heute auf jeden Fall die Anmeldefunktion zuende gebracht. Die Anmeldedaten werden alle
+                    auf einem seperaten Server gespeichert, in einer kleinen Datenbank. Eigentlich sollte man eine
+                    Bestätigungsmail bekommen, aber das war mir zu kompliziert. Ich habe uns auch eine Email gemacht.
+                    selser1412@gmail.com. Diese Mail werde ich dir geben, darauf wird dann die Seite sein. Du kannst
+                    dich dann mit dem Passwort einloggen. Das Passwort werde ich dir aber nicht verraten. Sobald du drin
+                    bist, kannst du alles sehen.
+                    <Br><br> Ich habe noch so viele Fotos die in die Slideshow nehmen kann und noch so viele Nachrichten
+                    gescreenshotet, welche ich in das Quiz nehmen kann. Das wird alles so lange dauert oh maaaan. Ich
+                    guck mal was ich machen kann, du kennst mich, ich mache ungern halbe Sachen. Wenn ich das mache,
+                    dann bin ich auch perfektionistisch so gut ich es halt zeitlich hinkriege.
+                    <br> Ich hoffe du freust dich
                 </p>
 
             </section>
@@ -728,9 +776,9 @@
 
                     <!-- NEU: Song 6 -->
                     <div class="song-card" data-audio="music/song6.mp3">
-                        <img src="Images/song6.jpg" alt="Song 6 Cover">
-                        <h4>Song 6</h4>
-                        <p>Beschreibung…</p>
+                        <img src="Images/WaitingIcon.png" alt="Song 6 Cover">
+                        <h4>Keine Ahnung mehr</h4>
+                        <p>Kannst ja gerne was vorschlagen</p>
                     </div>
                 </div>
 
@@ -745,6 +793,118 @@
 
             </section>
 
+            <section id="panel-countdowns" class="panel">
+
+                <h2>Unsere Countdowns ⏳❤️</h2>
+                <p>Hier hast du Countdowns für besondere Tage, vielleicht füge ich in Zukunft paar Tage hinzu</p>
+
+                <div class="countdown-grid-love">
+                    <!-- Valentinstag -->
+                    <div class="countdown-card-love" data-event="valentine">
+                        <div class="love-icon">💘</div>
+                        <h3>Valentinstag</h3>
+                        <div class="time-row">
+                            <div><span class="days">00</span><small>Tage</small></div>
+                            <div><span class="hours">00</span><small>Std</small></div>
+                            <div><span class="minutes">00</span><small>Min</small></div>
+                            <div><span class="seconds">00</span><small>Sek</small></div>
+                        </div>
+                        <p class="love-note">Liebe, Rosen, Küsse und noch viel mehr Liebe🥰</p>
+                    </div>
+
+                    <!-- Jahrestag -->
+                    <div class="countdown-card-love" data-event="anniversary">
+                        <div class="love-icon">💍</div>
+                        <h3>Unser nächster Jahrestaaaag</h3>
+                        <div class="time-row">
+                            <div><span class="days">00</span><small>Tage</small></div>
+                            <div><span class="hours">00</span><small>Std</small></div>
+                            <div><span class="minutes">00</span><small>Min</small></div>
+                            <div><span class="seconds">00</span><small>Sek</small></div>
+                        </div>
+                        <p class="love-note">5 Jahre und der Countdown kennt kein Ende 🤍</p>
+                    </div>
+
+                    <!-- Ihr Geburtstag -->
+                    <div class="countdown-card-love" data-event="her-bday">
+                        <div class="love-icon">🎂</div>
+                        <h3>Selis BDay</h3>
+                        <div class="time-row">
+                            <div><span class="days">00</span><small>Tage</small></div>
+                            <div><span class="hours">00</span><small>Std</small></div>
+                            <div><span class="minutes">00</span><small>Min</small></div>
+                            <div><span class="seconds">00</span><small>Sek</small></div>
+                        </div>
+                        <p class="love-note">Der schönste Tag auf dieser Welt 💗</p>
+                    </div>
+
+                    <!-- Dein Geburtstag -->
+                    <div class="countdown-card-love" data-event="his-bday">
+                        <div class="love-icon">🫶</div>
+                        <h3>BDay von deinem Freund</h3>
+                        <div class="time-row">
+                            <div><span class="days">00</span><small>Tage</small></div>
+                            <div><span class="hours">00</span><small>Std</small></div>
+                            <div><span class="minutes">00</span><small>Min</small></div>
+                            <div><span class="seconds">00</span><small>Sek</small></div>
+                        </div>
+                        <p class="love-note">Ich erwarte was schönes pff</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panel-essen" class="panel">
+                <h2>Wohin essen? 🍽️</h2>
+                <p>Schreib alle Orte rein, auf die ihr Bock habt. Wähle die Kategorie und zieh eins zufällig.</p>
+
+                <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start;">
+                    <!-- links: Zettel hinzufügen -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Zettel hinzufügen</h3>
+
+                        <label for="essenCategory" style="font-size:.8rem;">Kategorie</label>
+                        <select id="essenCategory"
+                            style="width:100%; padding:.5rem; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0b1220; color:white; margin-bottom:.5rem;">
+                            <option value="hauptspeise">Hauptspeise</option>
+                            <option value="suess">Süßes</option>
+                            <option value="getraenk">Getränk</option>
+                        </select>
+
+                        <input id="essenInput" type="text" placeholder="z.B. Vapiano, Sushi, Döner..."
+                            style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:#0b1220; color:white; margin-bottom:.5rem;">
+                        <button id="essenAddBtn"
+                            style="width:100%; background:#10a329; border:none; border-radius:10px; padding:.55rem 1rem; color:#001018; font-weight:600; cursor:pointer;">Speichern</button>
+                        <p id="essenAddMsg" style="margin-top:.4rem; font-size:.85rem;"></p>
+                    </div>
+
+                    <!-- rechts: zufällig ziehen -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Zufällig ziehen</h3>
+
+                        <label for="essenDrawCategory" style="font-size:.8rem;">Kategorie</label>
+                        <select id="essenDrawCategory"
+                            style="width:100%; padding:.5rem; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#0b1220; color:white; margin-bottom:.5rem;">
+                            <option value="hauptspeise">Hauptspeise</option>
+                            <option value="suess">Süßes</option>
+                            <option value="getraenk">Getränk</option>
+                        </select>
+
+                        <button id="essenDrawBtn"
+                            style="background:#b40f83; border:none; border-radius:10px; padding:.55rem 1rem; color:white; font-weight:600; cursor:pointer;">Zieh
+                            einen Zettel</button>
+                        <p id="essenDrawMsg" style="margin-top:.6rem; font-size:1rem;"></p>
+
+                        <h4 style="margin-top:1rem;">Zettel in dieser Kategorie</h4>
+                        <ul id="essenList"
+                            style="list-style:none; padding-left:0; margin-top:.4rem; max-height:180px; overflow-y:auto; gap:.3rem; display:flex; flex-direction:column;">
+                            <!-- wird per JS gefüllt -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
 
 
 
@@ -753,6 +913,7 @@
     </div><!-- /layout -->
 
     <!-- Script immer kurz vor </body> -->
+    <!-- CDN: Supabase JS -->
     <script src="script.js"></script>
 </body>
 

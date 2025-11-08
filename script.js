@@ -1,29 +1,140 @@
-// Zugangscode (Demo)
-const SECRET = "14122020";
+// ==================== SUPABASE GLOBAL CONFIG ====================
+const SUPABASE_URL = "https://gydiothkntpejybyjvpx.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5ZGlvdGhrbnRwZWp5YnlqdnB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2MDgyNTQsImV4cCI6MjA3ODE4NDI1NH0.AP5VyYh3rtes888Klm0_kR3mosus19P5RnCPHxJBWj4";
 
-// Elemente für Login (nur vorhanden auf login.html)
-const accessInput = document.getElementById("accessCode");
-const enterBtn = document.getElementById("enterBtn");
-const loginMsg = document.getElementById("loginMsg");
+const supabaseClient = typeof supabase !== "undefined"
+    ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    : null;
 
-// Wenn wir auf login.html sind:
-if (enterBtn) {
-    enterBtn.addEventListener("click", () => {
-        const typed = accessInput.value.trim();
-        if (typed === SECRET) {
-            // Code korrekt → Weiterleitung auf home.html
-            window.location.href = "home.html";
-        } else {
-            loginMsg.textContent = "Falscher Code. Bitte erneut versuchen.";
-            accessInput.style.borderColor = "#000000ff";
+// ============== AUTH: SIGNUP ==============
+async function signUpWithEmailAndUsername(email, username, password) {
+    if (!supabaseClient) throw new Error("Supabase nicht geladen");
+
+    // username bei der Registrierung direkt mitschicken
+    const { data: signUpData, error: signUpErr } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+            data: { username }   // landet in new.raw_user_meta_data
         }
     });
 
-    // Enter-Taste aktiv
-    accessInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") enterBtn.click();
-    });
+    if (signUpErr) throw signUpErr;
+
+    // WICHTIG: kein extra INSERT mehr hier!
+    return signUpData;
 }
+
+
+// ============== AUTH: LOGIN (Email ODER Username) ==============
+async function signInByEmailOrUsername(identity, password) {
+    if (!supabaseClient) throw new Error("Supabase nicht geladen");
+
+    let emailToUse = identity;
+
+    // wenn kein @ drin ist → wir denken, es ist username → email aus profiles holen
+    if (!identity.includes("@")) {
+        const { data, error } = await supabaseClient
+            .from("profiles")
+            .select("email")
+            .eq("username", identity)
+            .maybeSingle();
+
+        if (error) throw error;
+        if (!data) throw new Error("Kein Account mit diesem Benutzernamen gefunden.");
+        emailToUse = data.email;
+    }
+
+    const { data: loginData, error: loginErr } = await supabaseClient.auth.signInWithPassword({
+        email: emailToUse,
+        password
+    });
+
+    if (loginErr) throw loginErr;
+    return loginData;
+}
+
+// ============== AUTH: SEITE SCHÜTZEN (home.html) ==============
+async function protectPageIfNeeded() {
+    if (!supabaseClient) return;
+    if (!document.body.classList.contains("needs-auth")) return;
+
+    const { data } = await supabaseClient.auth.getSession();
+    const session = data?.session;
+    if (!session) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    // <--- HIER: global merken
+    window.currentUser = session.user;
+
+    const { data: profile } = await supabaseClient
+        .from("profiles")
+        .select("username")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+    console.log("eingeloggt als:", profile?.username || session.user.email);
+}
+
+
+// direkt beim Laden prüfen
+document.addEventListener("DOMContentLoaded", protectPageIfNeeded);
+
+// ============== AUTH: EVENTS FÜR index.html ==============
+document.addEventListener("DOMContentLoaded", () => {
+    // Elemente nur auf der Login-Seite vorhanden
+    const loginIdentity = document.getElementById("loginIdentity");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMsg = document.getElementById("loginMsg");
+
+    const regEmail = document.getElementById("regEmail");
+    const regUsername = document.getElementById("regUsername");
+    const regPassword = document.getElementById("regPassword");
+    const signupBtn = document.getElementById("signupBtn");
+    const signupMsg = document.getElementById("signupMsg");
+
+    // LOGIN
+    if (loginBtn) {
+        loginBtn.addEventListener("click", async () => {
+            loginMsg.textContent = "";
+            try {
+                await signInByEmailOrUsername(loginIdentity.value.trim(), loginPassword.value.trim());
+                window.location.href = "home.html";
+            } catch (err) {
+                console.error(err);
+                loginMsg.textContent = err.message || "Login fehlgeschlagen.";
+            }
+        });
+    }
+
+    // SIGNUP
+    if (signupBtn) {
+        signupBtn.addEventListener("click", async () => {
+            signupMsg.textContent = "";
+            try {
+                await signUpWithEmailAndUsername(
+                    regEmail.value.trim(),
+                    regUsername.value.trim(),
+                    regPassword.value.trim()
+                );
+                signupMsg.textContent = "Account erstellt! Schau ggf. in deine E-Mail.";
+            } catch (err) {
+                console.error(err);
+                signupMsg.textContent = err.message || "Registrierung fehlgeschlagen.";
+            }
+        });
+    }
+});
+
+async function supabaseLogout() {
+    if (!supabaseClient) return;
+    await supabaseClient.auth.signOut();
+    window.location.href = "index.html";
+}
+
 
 //--------------------------------------------------------------- Sidebar ein-/ausklappen ---------------------------------------------------
 const sidebar = document.getElementById("sidebar");
@@ -41,10 +152,6 @@ if (mobileToggle && sidebar) {
         sidebar.classList.toggle("open");
     });
 }
-
-
-
-
 
 
 
@@ -299,128 +406,157 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 
 // ========================================================= Glücksrad ==========================================================
 const wheelCanvas = document.getElementById("wheelCanvas");
-const ctx = wheelCanvas.getContext("2d");
-const spinBtn = document.getElementById("spinBtn");
-const result = document.getElementById("wheelResult");
+if (wheelCanvas) {
+    const ctx = wheelCanvas.getContext("2d");
+    const spinBtn = document.getElementById("spinBtn");
+    const result = document.getElementById("wheelResult");
 
-// 12 Felder – kannst du beliebig umbenennen
-let sectors = [
-    "Sercan kriegt Kuss 😘",
-    "Umarmunggggg 🤗",
-    "Massage for you 💆",
-    "Filmabend 🎬",
-    "Selis kriegt Kuss 😘",
-    "Kriegst ein Matcha 🥤",
-    "Du wirst gekitzelt 😂",
-    "Date dieses Wochenende 👩‍❤️‍👨",
-    "EIN ALTIN 🥇",
-    "Du schuldest mir was 😉",
-    "Ich singe für dich 🎤",
-    "Dummes Foto für Sticker 🤳"
-];
+    // 12 Felder – kannst du beliebig umbenennen
+    let sectors = [
+        "Sercan kriegt Kuss 😘",
+        "Umarmunggggg 🤗",
+        "Massage for you 💆",
+        "Filmabend 🎬",
+        "Selis kriegt Kuss 😘",
+        "Kriegst ein Matcha 🥤",
+        "Du wirst gekitzelt 😂",
+        "Date dieses Wochenende 👩‍❤️‍👨",
+        "EIN ALTIN 🥇",
+        "Du schuldest mir was 😉",
+        "Ich singe für dich 🎤",
+        "Dummes Foto für Sticker 🤳"
+    ];
 
-const numSectors = sectors.length;
-const arc = (2 * Math.PI) / numSectors;
-let currentAngle = 0;
-let spinning = false;
+    const numSectors = sectors.length;
+    const arc = (2 * Math.PI) / numSectors;
+    let currentAngle = 0;
+    let spinning = false;
 
-// Farben abwechselnd
-function randomColor(i) {
-    return i % 2 === 0 ? "#ff1e6a" : "#ff4d8f";
-}
+    function drawWheel() {
+        const w = wheelCanvas.width;
+        const h = wheelCanvas.height;
+        const cx = w / 2 - 40;
+        const cy = h / 2;
+        const r = Math.min(cx, cy) - 20;
 
-function drawWheel() {
-    const w = wheelCanvas.width;
-    const h = wheelCanvas.height;
-    const cx = w / 2 - 40; // Rad leicht nach links verschieben!
-    const cy = h / 2;
-    const r = Math.min(cx, cy) - 20; // kleiner Radius für Abstand
+        ctx.clearRect(0, 0, w, h);
 
-    ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < numSectors; i++) {
+            const angle = currentAngle + i * arc;
+            ctx.beginPath();
+            ctx.fillStyle = i % 2 === 0 ? "#ff1e6a" : "#ff4d8f";
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, r, angle, angle + arc);
+            ctx.fill();
 
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle + arc / 2);
+            ctx.textAlign = "right";
+            ctx.fillStyle = "#fff";
+            ctx.font = "18px sans-serif";
+            ctx.fillText(sectors[i], r - 20, 6);
+            ctx.restore();
+        }
 
-    // Segmente zeichnen
-    for (let i = 0; i < numSectors; i++) {
-        const angle = currentAngle + i * arc;
+        // Mittelpunkt
         ctx.beginPath();
-        ctx.fillStyle = i % 2 === 0 ? "#ff1e6a" : "#ff4d8f";
-        ctx.moveTo(cx, cy);
-        ctx.arc(cx, cy, r, angle, angle + arc);
+        ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
+        ctx.fillStyle = "#fff";
         ctx.fill();
 
-        // Text
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle + arc / 2);
-        ctx.textAlign = "right";
-        ctx.fillStyle = "#fff";
-        ctx.font = "18px sans-serif";
-        ctx.fillText(sectors[i], r - 20, 6);
-        ctx.restore();
+        // Pfeil
+        const arrowDist = r + 45;
+        const arrowWidth = 28;
+        const arrowHeight = 40;
+
+        ctx.beginPath();
+        ctx.moveTo(cx + arrowDist - arrowHeight, cy);
+        ctx.lineTo(cx + arrowDist, cy - arrowWidth / 2);
+        ctx.lineTo(cx + arrowDist, cy + arrowWidth / 2);
+        ctx.closePath();
+        ctx.fillStyle = "#10a329";
+        ctx.shadowColor = "#10a329";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
     }
 
-    // Mittelpunktpunkt
-    ctx.beginPath();
-    ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
-    ctx.fillStyle = "#fff";
-    ctx.fill();
+    drawWheel();
 
-    // ==== Pfeil außerhalb rechts mittig ====
-    const arrowDist = r + 45; // Abstand des Pfeils vom Rad
-    const arrowWidth = 28;
-    const arrowHeight = 40;
+    // Wenn heute schon gedreht wurde, Hinweis anzeigen
+    if (alreadySpunToday()) {
+        result.textContent = "Heute schon gedreht 🥹 – morgen wieder!";
+    }
 
-    ctx.beginPath();
-    ctx.moveTo(cx + arrowDist - arrowHeight, cy);                  // Spitze links
-    ctx.lineTo(cx + arrowDist, cy - arrowWidth / 2);
-    ctx.lineTo(cx + arrowDist, cy + arrowWidth / 2);
-    ctx.closePath();
-    ctx.fillStyle = "#10a329";
-    ctx.shadowColor = "#10a329";
-    ctx.shadowBlur = 12;
-    ctx.fill();
-    ctx.shadowBlur = 0;
 
-}
+    // ---- Daily-Spin-Helper ----
+    function alreadySpunToday() {
+        const last = localStorage.getItem("wheelLastSpin");
+        if (!last) return false;
+
+        const today = new Date().toISOString().slice(0, 10); // z.B. "2025-11-08"
+        return last === today;
+    }
+
+    function markSpunToday() {
+        const today = new Date().toISOString().slice(0, 10);
+        localStorage.setItem("wheelLastSpin", today);
+    }
 
 
 
-drawWheel();
-
-function spinWheel() {
-    if (spinning) return;
-    spinning = true;
-    result.textContent = "Dreht...";
-
-    // Zufällige Endrotation
-    const extraSpins = 3 + Math.random() * 3; // 3–6 Runden
-    const targetAngle = currentAngle + extraSpins * 2 * Math.PI + Math.random() * 2 * Math.PI;
-
-    const duration = 4000; // 4 Sekunden
-    const start = performance.now();
-
-    function animate(time) {
-        const elapsed = time - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3); // smooth
-        currentAngle = targetAngle * ease;
-        drawWheel();
-
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        } else {
-            spinning = false;
-            // Ergebnis berechnen
-            const deg = ((currentAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-            const index = Math.floor(numSectors - (deg / arc)) % numSectors;
-            result.textContent = "→ " + sectors[index];
+    function spinWheel() {
+        // 1) prüfen ob heute schon gedreht
+        if (alreadySpunToday()) {
+            result.textContent = "Heute schon gedreht 🥹 – morgen wieder!";
+            return;
         }
+
+        if (spinning) return;
+        spinning = true;
+        result.textContent = "Dreht...";
+
+        // Zufällige Endrotation
+        const extraSpins = 3 + Math.random() * 3; // 3–6 Runden
+        const targetAngle = currentAngle + extraSpins * 2 * Math.PI + Math.random() * 2 * Math.PI;
+
+        const duration = 4000; // 4 Sekunden
+        const start = performance.now();
+
+        function animate(time) {
+            const elapsed = time - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3); // smooth
+            currentAngle = targetAngle * ease;
+            drawWheel();
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                spinning = false;
+                // Ergebnis berechnen
+                const deg = ((currentAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                const index = Math.floor(numSectors - (deg / arc)) % numSectors;
+                const prizeText = sectors[index];
+
+                // 2) Ergebnis anzeigen
+                result.textContent = "→ " + prizeText;
+
+                // 3) merken, dass heute gedreht wurde
+                markSpunToday();
+            }
+        }
+
+        requestAnimationFrame(animate);
     }
 
-    requestAnimationFrame(animate);
+
+    if (spinBtn) {
+        spinBtn.addEventListener("click", spinWheel);
+    }
 }
 
-spinBtn.addEventListener("click", spinWheel);
 
 // ===================== "Wer hat das gesagt?" =====================
 (() => {
@@ -712,6 +848,233 @@ if (songCards && audioPlayer) {
     });
 }
 
+// ==================== LOVE COUNTDOWNS ====================
+(() => {
+    const cards = document.querySelectorAll(".countdown-card-love");
+    if (!cards.length) return;
 
+    // Hier trägst du eure Daten ein
+    // Monat ist 0-basiert (0=Jan, 1=Feb, 11=Dez)
+    const eventDates = {
+        valentine: { month: 1, day: 14 },        // 14. Februar
+        anniversary: { month: 11, day: 14 },     // 14. Dezember (14122020 😏)
+        "her-bday": { month: 6, day: 13 },       // TODO: anpassen!
+        "his-bday": { month: 3, day: 8 }         // TODO: anpassen!
+    };
+
+    function nextDate(month, day) {
+        const now = new Date();
+        const year = now.getFullYear();
+        let target = new Date(year, month, day, 0, 0, 0);
+
+        // wenn dieses Jahr schon vorbei → nächstes Jahr
+        if (target.getTime() < now.getTime()) {
+            target = new Date(year + 1, month, day, 0, 0, 0);
+        }
+        return target;
+    }
+
+    function updateCountdowns() {
+        const now = new Date().getTime();
+
+        cards.forEach(card => {
+            const key = card.getAttribute("data-event");
+            const cfg = eventDates[key];
+            if (!cfg) return;
+
+            const target = nextDate(cfg.month, cfg.day).getTime();
+            const diff = target - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            card.querySelector(".days").textContent = String(days).padStart(2, "0");
+            card.querySelector(".hours").textContent = String(hours).padStart(2, "0");
+            card.querySelector(".minutes").textContent = String(minutes).padStart(2, "0");
+            card.querySelector(".seconds").textContent = String(seconds).padStart(2, "0");
+
+            // wenn genau heute:
+            if (days === 0 && hours === 0 && minutes === 0 && seconds >= 0) {
+                const note = card.querySelector(".love-note");
+                if (note) note.textContent = "Heute ist es soweit!!! 💓";
+            }
+        });
+    }
+
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
+})();
+
+// ====================== ESSEN-ZETTEL (mit Kategorien + löschen) ======================
+async function loadEssenZettel(category = "hauptspeise") {
+    if (!supabaseClient || !window.currentUser) return;
+
+    const { data, error } = await supabaseClient
+        .from("essen_zettel")
+        .select("id, text, category")
+        .eq("owner", window.currentUser.id)
+        .eq("category", category)
+        .order("created_at", { ascending: false });
+
+    const listEl = document.getElementById("essenList");
+    if (!listEl) return;
+
+    listEl.innerHTML = "";
+
+    if (error) {
+        listEl.innerHTML = "<li>Fehler beim Laden.</li>";
+        console.error(error);
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        listEl.innerHTML = "<li>Keine Zettel in dieser Kategorie 💭</li>";
+        return;
+    }
+
+    data.forEach(row => {
+        const li = document.createElement("li");
+        li.style.background = "rgba(0,0,0,.25)";
+        li.style.padding = ".3rem .5rem";
+        li.style.borderRadius = "8px";
+        li.style.display = "flex";
+        li.style.justifyContent = "space-between";
+        li.style.alignItems = "center";
+        li.style.gap = ".5rem";
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = row.text;
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "✖";
+        delBtn.style.background = "transparent";
+        delBtn.style.border = "none";
+        delBtn.style.color = "#fca5a5";
+        delBtn.style.cursor = "pointer";
+        delBtn.style.fontSize = "1rem";
+        delBtn.addEventListener("click", () => deleteEssenZettel(row.id, category));
+
+        li.appendChild(textSpan);
+        li.appendChild(delBtn);
+        listEl.appendChild(li);
+    });
+}
+
+async function addEssenZettel(text) {
+    const msgEl = document.getElementById("essenAddMsg");
+    const catEl = document.getElementById("essenCategory");
+    const category = catEl ? catEl.value : "hauptspeise";
+
+    if (!supabaseClient || !window.currentUser) {
+        if (msgEl) msgEl.textContent = "Nicht eingeloggt.";
+        return;
+    }
+    if (!text) {
+        if (msgEl) msgEl.textContent = "Bitte etwas eingeben.";
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("essen_zettel")
+        .insert([{
+            text,
+            owner: window.currentUser.id,
+            category
+        }]);
+
+    if (error) {
+        console.error(error);
+        if (msgEl) msgEl.textContent = "Fehler beim Speichern.";
+        return;
+    }
+
+    if (msgEl) msgEl.textContent = "Gespeichert ✅";
+    document.getElementById("essenInput").value = "";
+    loadEssenZettel(category);
+}
+
+async function drawEssenZettel() {
+    const outEl = document.getElementById("essenDrawMsg");
+    const catEl = document.getElementById("essenDrawCategory");
+    const category = catEl ? catEl.value : "hauptspeise";
+
+    if (!supabaseClient || !window.currentUser) {
+        if (outEl) outEl.textContent = "Nicht eingeloggt.";
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("essen_zettel")
+        .select("id, text")
+        .eq("owner", window.currentUser.id)
+        .eq("category", category);
+
+    if (error) {
+        console.error(error);
+        if (outEl) outEl.textContent = "Fehler beim Ziehen.";
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        if (outEl) outEl.textContent = "In dieser Kategorie ist noch nichts 👀";
+        return;
+    }
+
+    const random = data[Math.floor(Math.random() * data.length)];
+    outEl.textContent = "→ " + random.text;
+}
+
+async function deleteEssenZettel(id, category = "hauptspeise") {
+    if (!supabaseClient || !window.currentUser) return;
+
+    const { error } = await supabaseClient
+        .from("essen_zettel")
+        .delete()
+        .eq("id", id)
+        .eq("owner", window.currentUser.id);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    loadEssenZettel(category);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const addBtn = document.getElementById("essenAddBtn");
+    const drawBtn = document.getElementById("essenDrawBtn");
+    const drawCat = document.getElementById("essenDrawCategory");
+
+    if (addBtn) {
+        addBtn.addEventListener("click", () => {
+            const val = document.getElementById("essenInput").value.trim();
+            addEssenZettel(val);
+        });
+    }
+
+    if (drawBtn) {
+        drawBtn.addEventListener("click", () => {
+            drawEssenZettel();
+        });
+    }
+
+    // wenn die Kategorie rechts gewechselt wird => Liste neu laden
+    if (drawCat) {
+        drawCat.addEventListener("change", () => {
+            loadEssenZettel(drawCat.value);
+        });
+    }
+
+    // initial laden (nachdem protectPageIfNeeded gelaufen ist)
+    if (document.getElementById("panel-essen")) {
+        setTimeout(() => {
+            const startCat = drawCat ? drawCat.value : "hauptspeise";
+            loadEssenZettel(startCat);
+        }, 500);
+    }
+});
 
 

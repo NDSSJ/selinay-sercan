@@ -987,3 +987,95 @@ footer {
         font-size: 0.8rem;
     }
 }
+
+/* ========================================================= Love Countdowns Panel ====================================================== */
+#panel-countdowns h2 {
+    margin-bottom: .2rem;
+}
+
+#panel-countdowns p {
+    color: rgba(229, 231, 235, .75);
+}
+
+.countdown-grid-love {
+    margin-top: 1.2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+}
+
+.countdown-card-love {
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, .3));
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 1rem .9rem 1.2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+
+.countdown-card-love::after {
+    content: "♥";
+    position: absolute;
+    top: -20px;
+    right: -5px;
+    font-size: 4.5rem;
+    color: rgba(255, 30, 106, 0.05);
+    transform: rotate(-12deg);
+    pointer-events: none;
+}
+
+.countdown-card-love h3 {
+    margin-bottom: .6rem;
+    color: #fff;
+}
+
+.love-icon {
+    font-size: 2.1rem;
+    margin-bottom: .35rem;
+}
+
+.time-row {
+    display: flex;
+    justify-content: center;
+    gap: .4rem;
+    margin-bottom: .6rem;
+}
+
+.time-row div {
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    min-width: 48px;
+    padding: .35rem .4rem .25rem;
+    box-shadow: inset 0 0 14px rgba(255, 255, 255, 0.02);
+}
+
+.time-row span {
+    display: block;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffb4c7;
+}
+
+.time-row small {
+    font-size: .6rem;
+    color: rgba(229, 231, 235, .6);
+}
+
+.love-note {
+    font-size: .7rem;
+    color: rgba(229, 231, 235, .55);
+}
+
+@media (max-width: 550px) {
+    .time-row {
+        gap: .25rem;
+    }
+
+    .time-row div {
+        min-width: 42px;
+    }
+}

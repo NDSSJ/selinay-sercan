@@ -6,21 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- NEU: Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
+
 
 <body>
     <section id="login">
         <div class="login-card">
             <h1>Hello Melegim 👋❤️</h1>
-            <p>Gib bitte dein Passwort ein um fortzufahren.</p>
-            <p>(Tipp: Es ist keine Beleidigung 😉)</p>
-            <input type="password" id="accessCode" placeholder="Denk nach askim..." />
-            <button id="enterBtn">Anmelden</button>
+            <p>Melde dich an oder erstelle einen Account.</p>
+
+            <!-- LOGIN -->
+            <h2 style="margin-top:1rem;font-size:1.1rem;">Anmelden</h2>
+            <input type="text" id="loginIdentity" placeholder="Email" />
+            <input type="password" id="loginPassword" placeholder="Passwort" />
+            <button id="loginBtn">Anmelden</button>
             <p id="loginMsg" class="msg"></p>
+
+            <hr style="margin:1.3rem 0; border:0; border-top:1px solid rgba(255,255,255,.05);" />
+
+            <!-- SIGNUP -->
+            <h2 style="margin-top:0;font-size:1.1rem;">Registrieren</h2>
+            <input type="email" id="regEmail" placeholder="Email" />
+            <input type="text" id="regUsername" placeholder="Benutzername" />
+            <input type="password" id="regPassword" placeholder="Passwort" />
+            <button id="signupBtn">Account erstellen</button>
+            <p id="signupMsg" class="msg"></p>
         </div>
     </section>
 
     <script src="script.js"></script>
 </body>
+
 
 </html>
