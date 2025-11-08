@@ -911,3 +911,79 @@ footer {
         cursor: pointer;
     }
 }
+
+/* ================================================================ MOBILE FIXES ===================================================================== */
+@media (max-width: 800px) {
+
+    /* Inhalt etwas enger */
+    .content {
+        padding: 1rem 0.75rem 5rem;
+    }
+
+    /* Panels nicht zu breit */
+    .panel {
+        width: 100%;
+    }
+
+    /* Slideshow einspaltig + weniger Höhe */
+    .slideshow {
+        max-width: 100%;
+        height: 45vh;
+    }
+
+    /* linke/rechte Textboxen untereinander */
+    .sl-text {
+        margin-top: 1rem;
+    }
+
+    /* Songs: 1 Spalte */
+    .songs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Lautstärke mittig, nicht zu breit */
+    .volume-row {
+        max-width: 100%;
+    }
+
+    /* Herzbereich: Canvas nicht über den Screen laufen lassen */
+    .heart-wrap {
+        width: 100%;
+    }
+
+    #heartCanvas {
+        width: 100%;
+        height: auto;
+        /* nur anzeigen, Canvas bleibt technisch groß, aber das ist okay */
+    }
+
+    /* das Formular im Herz etwas kleiner */
+    .inside-form {
+        width: 85%;
+    }
+
+    /* Glücksrad runter skalieren */
+    .wheel-container {
+        width: 100%;
+    }
+
+    #wheelCanvas {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* noch kleiner: echte Smartphones 430px und drunter */
+@media (max-width: 430px) {
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .quiz-card {
+        max-width: 100%;
+    }
+
+    .volume-row label {
+        font-size: 0.8rem;
+    }
+}
