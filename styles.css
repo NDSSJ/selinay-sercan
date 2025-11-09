@@ -126,8 +126,24 @@ body {
     color: var(--text);
 }
 
-/* Sidebar */
+/* Standard: Sidebar offen */
+.layout .content {
+    margin-left: 240px;
+    transition: margin-left .3s ease;
+}
+
+/* Wenn Sidebar eingeklappt ist → Content näher ran */
+.layout .sidebar.collapsed~.content {
+    margin-left: 70px;
+}
+
+
 .sidebar {
+    position: fixed;
+    /* <- neu */
+    top: 0;
+    left: 0;
+    height: 100vh;
     width: 240px;
     background: #117c2b65;
     border-right: 1px solid rgba(255, 255, 255, .1);
@@ -135,6 +151,7 @@ body {
     flex-direction: column;
     transition: width .3s ease;
     overflow: hidden;
+    z-index: 1000;
 }
 
 .sidebar.collapsed {
@@ -920,6 +937,19 @@ footer {
         padding: 1rem 0.75rem 5rem;
     }
 
+    .layout .content {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        /* rest wie vorher bei dir */
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
     /* Panels nicht zu breit */
     .panel {
         width: 100%;
@@ -1078,4 +1108,151 @@ footer {
     .time-row div {
         min-width: 42px;
     }
+}
+
+/* ===== Tagesnachricht ===== */
+.daily-message-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    background: rgba(0, 0, 0, 0.15);
+    padding: .7rem 1rem;
+    border-radius: 12px;
+    max-width: 420px;
+}
+
+.daily-message-bar label {
+    font-weight: 500;
+}
+
+.daily-message-bar select {
+    flex: 1;
+    padding: .4rem .6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(11, 18, 32, .7);
+    color: #fff;
+}
+
+.daily-message-display {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    padding: 1.6rem 1.4rem 2.1rem;
+    text-align: center;
+    min-height: 180px;
+}
+
+#dailyMsgMeta {
+    display: block;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+#dailyMsgText {
+    font-size: clamp(1.7rem, 2.3vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+/* ==================== Wahrheit oder Pflicht ==================== */
+.wop-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.wop-controls label {
+    font-weight: 500;
+}
+
+#wopCategory {
+    padding: .5rem .75rem;
+    border-radius: 8px;
+    background: rgba(11, 18, 32, .6);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wop-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+#wopQuestion {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#wopQuestion.animate {
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.wop-buttons button {
+    padding: .7rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+#wopCategory:focus,
+.wop-buttons button:focus {
+    outline: none;
+}
+
+#truthBtn {
+    background: linear-gradient(90deg, #00b4d8, #0077b6);
+}
+
+#truthBtn:hover {
+    transform: scale(1.05);
+}
+
+#dareBtn {
+    background: linear-gradient(90deg, #ff006e, #fb5607);
+}
+
+#dareBtn:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Einheitliche Höhe für Menü-Buttons ===== */
+.menu-item {
+    min-height: 48px;
+    /* gleiche Höhe für alle */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-wrap: nowrap;
+    /* Text bleibt in einer Zeile */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* falls Text zu lang ist, ... anzeigen */
 }

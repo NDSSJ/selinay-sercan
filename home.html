@@ -66,14 +66,20 @@
                 </button>
 
                 <button class="menu-item" data-target="panel-essen">
-                    <i class="fa-solid fa-bowl-food"></i><span>Wohin essen?</span>
+                    <i class="fa-solid fa-bowl-food"></i><span>Was essen wir diesmal?</span>
                 </button>
 
+                <button class="menu-item" data-target="panel-dailymessage">
+                    <i class="fa-solid fa-envelope"></i><span>Daily Message for u</span>
+                </button>
+
+                <button class="menu-item" data-target="panel-wop">
+                    <i class="fa-solid fa-kiss"></i><span>Wahrheit oder Pflicht</span>
+                </button>
+                
                 <button onclick="supabaseLogout()" class="menu-item">
                     <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
                 </button>
-
-
 
             </nav>
         </aside>
@@ -186,7 +192,18 @@
                     guck mal was ich machen kann, du kennst mich, ich mache ungern halbe Sachen. Wenn ich das mache,
                     dann bin ich auch perfektionistisch so gut ich es halt zeitlich hinkriege.
                     <br> Ich hoffe du freust dich
+                    <br> Jetzt habe ich noch ein Wahrheit oder Pflicht Spiel und ein Tagesnachrichten Panel hinzugefügt.
+                    Jetzt siehst du jeden Tag eine Nachricht von mir, was ich an dir Liebe oder wieso ich dich Liebe.
                 </p>
+
+                <p> <strong>(09.11.2025)</strong>
+                    Heute war das Fußballspiel gegen Union was abgebrochen wurde hahahah. Jetzt schläft meine süße
+                    Selis, während ich das hier etwas weitermache. Jetzt wird bisschen die Datenbank mit den Daten
+                    gefüllt wie z.B. die Tages Messages. Mal sehen wie weit ich komme und ob ich noch eine Idee kriege
+                    für weitere Panels.
+
+                </p>
+                ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             </section>
 
@@ -854,14 +871,14 @@
             </section>
 
             <section id="panel-essen" class="panel">
-                <h2>Wohin essen? 🍽️</h2>
-                <p>Schreib alle Orte rein, auf die ihr Bock habt. Wähle die Kategorie und zieh eins zufällig.</p>
+                <h2>Was essen wir diesmal?🍽️</h2>
+                <p>Hier sammeln wir die Orte und können zufällig auslosen was wir essen, NIE WIEDER ENTSCHEIDEN JAAA</p>
 
                 <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-start;">
                     <!-- links: Zettel hinzufügen -->
                     <div
                         style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
-                        <h3>Zettel hinzufügen</h3>
+                        <h3>Ort hinzufügen</h3>
 
                         <label for="essenCategory" style="font-size:.8rem;">Kategorie</label>
                         <select id="essenCategory"
@@ -905,7 +922,48 @@
                 </div>
             </section>
 
+            <!-- Panel: Tagesnachricht -->
+            <section id="panel-dailymessage" class="panel">
+                <h2>Tagesnachricht ❤️</h2>
+                <p>Wähle ein Datum – die Nachricht wird dir groß angezeigt.</p>
 
+                <!-- Datum-Auswahl (wird per JS gefüllt) -->
+                <div class="daily-message-bar">
+                    <label for="dailyMsgSelect">Datum auswählen:</label>
+                    <select id="dailyMsgSelect">
+                        <option value="">Lade Nachrichten…</option>
+                    </select>
+                </div>
+
+                <!-- Anzeige -->
+                <div class="daily-message-display">
+                    <small id="dailyMsgMeta"></small>
+                    <div id="dailyMsgText">Keine Nachricht gefunden.</div>
+                </div>
+            </section>
+
+            <!-- ===================== Wahrheit oder Pflicht ===================== -->
+            <section id="panel-wop" class="panel">
+                <h2>Wahrheit oder Pflicht 💋</h2>
+
+                <div class="wop-controls">
+                    <label for="wopCategory">Kategorie:</label>
+                    <select id="wopCategory">
+                        <option value="classic">Classic 💬</option>
+                        <option value="couple">Couple 💞</option>
+                        <option value="spicy">Spicy 🔥</option>
+                    </select>
+
+                    <div class="wop-buttons">
+                        <button id="truthBtn">Wahrheit</button>
+                        <button id="dareBtn">Pflicht</button>
+                    </div>
+                </div>
+
+                <div class="wop-display">
+                    <p id="wopQuestion">Drücke auf Wahrheit oder Pflicht 😉</p>
+                </div>
+            </section>
 
 
         </main>
