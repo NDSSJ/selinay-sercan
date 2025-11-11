@@ -4,32 +4,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login | Melegim ❤️</title>
+    <link rel="icon" type="image/png" href="Images/TabIcon.png">
+    <!-- STYLES -->
     <link rel="stylesheet" href="styles.css" />
-
-    <!-- NEU: Supabase CDN -->
+    <!-- SUPABASE CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
-
 <body>
+    <!-- ======================== LOGIN-BEREICH ======================== -->
     <section id="login">
         <div class="login-card">
             <h1>Hello Melegim 👋❤️</h1>
-            <p>Melde dich an oder erstelle einen Account.</p>
+            <p>Melde dich an Selis, Account ist schon erstellt</p>
+            <p>Email hast du, Passwort errätst du schon</p>
 
-            <!-- LOGIN -->
-            <h2 style="margin-top:1rem;font-size:1.1rem;">Anmelden</h2>
-            <input type="text" id="loginIdentity" placeholder="Email" />
+            <!-- ========== LOGIN ========== -->
+            <h2>Anmelden</h2>
+            <input type="text" id="loginIdentity" placeholder="Email oder Benutzername" />
             <input type="password" id="loginPassword" placeholder="Passwort" />
             <button id="loginBtn">Anmelden</button>
             <p id="loginMsg" class="msg"></p>
 
             <hr style="margin:1.3rem 0; border:0; border-top:1px solid rgba(255,255,255,.05);" />
 
-            <!-- SIGNUP -->
-            <h2 style="margin-top:0;font-size:1.1rem;">Registrieren</h2>
+            <!-- ========== REGISTRIERUNG ========== -->
+            <h2>Registrieren</h2>
             <input type="email" id="regEmail" placeholder="Email" />
             <input type="text" id="regUsername" placeholder="Benutzername" />
             <input type="password" id="regPassword" placeholder="Passwort" />
@@ -38,8 +39,8 @@
         </div>
     </section>
 
+    <!-- SCRIPT -->
     <script src="script.js"></script>
 </body>
-
 
 </html>

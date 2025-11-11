@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meine Seite</title>
+    <title>SelSer</title>
+    <link rel="icon" type="image/png" href="Images/TabIcon.png">
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -69,6 +70,11 @@
                     <i class="fa-solid fa-bowl-food"></i><span>Was essen wir diesmal?</span>
                 </button>
 
+                <button class="menu-item" data-target="panel-date-ideen">
+                    <i class="fa-solid fa-champagne-glasses"></i><span>Date Ideen</span>
+                </button>
+
+
                 <button class="menu-item" data-target="panel-dailymessage">
                     <i class="fa-solid fa-envelope"></i><span>Daily Message for u</span>
                 </button>
@@ -76,10 +82,12 @@
                 <button class="menu-item" data-target="panel-wop">
                     <i class="fa-solid fa-kiss"></i><span>Wahrheit oder Pflicht</span>
                 </button>
-                
+
                 <button onclick="supabaseLogout()" class="menu-item">
                     <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
                 </button>
+
+
 
             </nav>
         </aside>
@@ -195,12 +203,15 @@
                     <br> Jetzt habe ich noch ein Wahrheit oder Pflicht Spiel und ein Tagesnachrichten Panel hinzugefügt.
                     Jetzt siehst du jeden Tag eine Nachricht von mir, was ich an dir Liebe oder wieso ich dich Liebe.
                 </p>
-
+                ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <p> <strong>(09.11.2025)</strong>
                     Heute war das Fußballspiel gegen Union was abgebrochen wurde hahahah. Jetzt schläft meine süße
                     Selis, während ich das hier etwas weitermache. Jetzt wird bisschen die Datenbank mit den Daten
                     gefüllt wie z.B. die Tages Messages. Mal sehen wie weit ich komme und ob ich noch eine Idee kriege
                     für weitere Panels.
+                    <br> Jetzt habe ich noch das Bild für den Tab erstellt, das sieht auch ganz gut aus weil das sind
+                    wir beide hihi. Es wird soooo lange dauern bis ich die Slideshow auffülle, das Nachrichtenquiz
+                    auffülle und sonst den rest ufff. Das wird echt stressig...
 
                 </p>
                 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -217,10 +228,9 @@
                     <aside class="sl-text" id="leftBox">
                         <h3 id="leftTitle">Beschreibung</h3>
                         <p id="leftBody"> Die ganzen Fotos die du sehen wirst sind völlig random, also da ist keine
-                            zeitliche
-                            Reihenfolge. Zu jedem Foto habe ich rechts was kleines geschrieben, einfach das, was mir
-                            dazu eingefallen ist. Das sind insgesamt fast 100 Bilder, vielleicht sind es mehr wenn ich
-                            erst richtig fertig bin. Mal sehen</p>
+                            zeitliche Reihenfolge. Zu jedem Foto habe ich rechts was kleines geschrieben, einfach das,
+                            was mir dazu eingefallen ist. Das sind insgesamt fast 100 Bilder, vielleicht sind es mehr
+                            wenn ich erst richtig fertig bin. Mal sehen</p>
                     </aside>
 
                     <!-- Mitte: Slideshow + Buttons -->
@@ -723,7 +733,8 @@
             <!-- Panel: Karteikarten-Spiel -->
             <section id="panel-platzhalter3" class="panel">
                 <h2>Wer hat das gesagt? 🧠</h2>
-                <p>Rate, von wem die Nachricht war – und aus welchem Jahr.</p>
+                <p>Hier sind Nachrichten von unserer 5 Jährigen Beziehung, rate mal von wem und wann die Nachricht war
+                </p>
 
                 <div class="quiz-card">
                     <p id="quizText" class="quiz-text">…</p>
@@ -752,7 +763,7 @@
             </section>
 
             <section id="panel-songs" class="panel">
-                <h2>Unsere Lieblingssongs 💿</h2>
+                <h2>Songs, die ich mit uns verbinde 💿</h2>
                 <p>Klick auf eines unserer Songs askim, dann spielt der Song für dich ab.</p>
 
                 <div class="songs-grid">
@@ -760,7 +771,7 @@
                     <div class="song-card" data-audio="Music/Song1BEV.mp3">
                         <img src="Images/Song1Cover.png" alt="Song 1 Cover">
                         <h4>Bist du schon bereit für den Tanz?</h4>
-                        <p>Erdogan Özdemir - Bana ellerini ver!</p>
+                        <p>Erdogan Özdemir - Bana ellerini ver</p>
                     </div>
 
                     <!-- Song 2 -->
@@ -921,6 +932,44 @@
                     </div>
                 </div>
             </section>
+
+            <!-- ==================== PANEL: DATE-IDEEN ==================== -->
+            <section id="panel-date-ideen" class="panel">
+                <h2>Ein Date-Ideen Generator🎯 </h2>
+                <p>Falls wir mal wieder nicht wissen was zutun ist, können wir das hier rein schreiben</p>
+
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-start; margin-top:1.1rem;">
+
+                    <!-- links: neue Idee -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Neue Idee speichern</h3>
+                        <input id="dateInput" type="text"
+                            placeholder="z.B. Therme, Schlittschuhlaufen, Sonnenuntergang gucken..."
+                            style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:#0b1220; color:white; margin-bottom:.5rem;">
+                        <button id="dateAddBtn"
+                            style="width:100%; background:#10a329; border:none; border-radius:10px; padding:.55rem 1rem; color:#001018; font-weight:600; cursor:pointer;">Speichern</button>
+                        <p id="dateAddMsg" style="margin-top:.4rem; font-size:.85rem;"></p>
+                    </div>
+
+                    <!-- rechts: zufällig + liste -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Zufällige Idee</h3>
+                        <button id="dateDrawBtn"
+                            style="background:#b40f83; border:none; border-radius:10px; padding:.55rem 1rem; color:white; font-weight:600; cursor:pointer;">Zieh
+                            eine Idee</button>
+                        <p id="dateDrawMsg" style="margin-top:.6rem; font-size:1rem;"></p>
+
+                        <h4 style="margin-top:1rem;">Gespeicherte Ideen</h4>
+                        <ul id="dateList"
+                            style="list-style:none; padding-left:0; margin-top:.4rem; max-height:190px; overflow-y:auto; gap:.3rem; display:flex; flex-direction:column;">
+                            <!-- wird per JS gefüllt -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
 
             <!-- Panel: Tagesnachricht -->
             <section id="panel-dailymessage" class="panel">
