@@ -109,6 +109,11 @@
                     <i class="fa-solid fa-kiss"></i><span>Wahrheit oder Pflicht</span>
                 </button>
 
+                <button class="menu-item" data-target="panel-gifts">
+                    <i class="fa-solid fa-gift"></i><span>Geschenkwünsche</span>
+                </button>
+
+
                 <button onclick="supabaseLogout()" class="menu-item">
                     <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
                 </button>
@@ -147,7 +152,7 @@
                     ist, sogar mit ChatGPT der den Grundriss für alles gibt, gibt es immer Probleme die ich selber
                     bewältigen muss. <br>Diese Slideshow bringt mein Ende.
                     <br>
-                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
                 <p> <strong>(24.10.2025)</strong>
@@ -156,7 +161,7 @@
                     noch ins Gym und mit Selis Padel spielen in Düsseldorf. Bis dahin habe ich das hoffentlich
                     geschafft, weil ich glaube es wartet noch bisschen was auf mich.
                     <br>
-                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
                 <p> <strong>(29.10.2025)</strong>
@@ -178,7 +183,7 @@
                     ansehen kannst, aber es klappt einfach nicht omg... Ich hoffe ich kriege das noch hin, sonst ist
                     alles umsonst gewesen
                     <br>
-                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
                 <p> <strong>(06.11.2025)</strong>
@@ -188,7 +193,7 @@
                     <br> Du hast safe was geahnt, wenn du ChatGPT abcheckst oder so dann weißt du ALLES. Insallah tust
                     du es nicht, ich kann es nicht verhindern... Ich glaube aber heute hatte ich den durchbruch.
                     <br>
-                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
                 <p> <strong>(07.11.2025)</strong>
@@ -198,7 +203,7 @@
                     <br> Das ist unnormal schwer, ich hab echt nicht viel gefunden ich suche aber immer mal wieder
                     weiter.
                     <br>
-                    ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 </p>
 
                 <p> <strong>(08.11.2025)</strong>
@@ -229,7 +234,7 @@
                     <br> Jetzt habe ich noch ein Wahrheit oder Pflicht Spiel und ein Tagesnachrichten Panel hinzugefügt.
                     Jetzt siehst du jeden Tag eine Nachricht von mir, was ich an dir Liebe oder wieso ich dich Liebe.
                 </p>
-                ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <p> <strong>(09.11.2025)</strong>
                     Heute war das Fußballspiel gegen Union was abgebrochen wurde hahahah. Jetzt schläft meine süße
                     Selis, während ich das hier etwas weitermache. Jetzt wird bisschen die Datenbank mit den Daten
@@ -240,7 +245,7 @@
                     auffülle und sonst den rest ufff. Das wird echt stressig...
 
                 </p>
-                ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 <p> <strong>(15.11.2025)</strong>
                     Ich hab jetzt eine Woche Pause gehabt, und ich hab immer noch nicht viele Ideen. Du bist gerade in
                     Istanbul und chillst da ochhh. Ich muss immer noch die ganzen Listen füllen. Das wird so lange
@@ -249,8 +254,8 @@
                     <br> Okkkk ich habe jetzt die Anfangssequenz eingebaut und bisschen die Random Zettel für Date und
                     Essen verbessert. Ich mache bestimmt noch paar Verschönerungen. Ich muss jetzt nurnoch alles auf
                     GitHub hochladen.
-
                 </p>
+                ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             </section>
 
             <!------------------------------------------------------ PANELS ------------------------------------------------------->
@@ -737,7 +742,7 @@
                     <form id="heartForm" class="inside-form" autocomplete="off">
                         <input id="fieldA" type="text" placeholder="Junge" />
                         <input id="fieldB" type="text" placeholder="Mädchen" />
-                        <button type="submit" class="ghost-btn">♡</button>
+                        <button type="submit" class="ghost-btn">♡ Berechnen ♡</button>
                     </form>
                 </div>
             </section>
@@ -746,10 +751,20 @@
             <div id="loveModal" class="modal hidden" role="dialog" aria-modal="true">
                 <div class="modal-card">
                     <div class="infinity">∞</div>
-                    <p>Ich liebe dich einmal bis zum Mond und zurück birtanem</p>
+
+                    <!-- NEU: Erde-Mond-Animation -->
+                    <div class="space-anim">
+                        <div class="earth-planet"></div>
+                        <div class="moon-planet"></div>
+                        <div class="orbit-heart"></div>
+                    </div>
+
+
+                    <p>Ich liebe dich einmal bis zum Mond und zurück birtanem </p>
                     <button id="closeModal" class="close-btn">Schließen</button>
                 </div>
             </div>
+
 
             <!-- Allgemeines Popup für Essen & Date-Ideen -->
             <div id="popupModal" class="modal hidden" role="dialog" aria-modal="true">
@@ -1057,6 +1072,48 @@
                     <p id="wopQuestion">Drücke auf Wahrheit oder Pflicht 😉</p>
                 </div>
             </section>
+
+            <section id="panel-gifts" class="panel">
+                <h2>Deine Geschenkwünsche 🎁</h2>
+                <p>Hier kannst du deine Geschenkwünsche eintragen, bitte tu es Selis...</p>
+
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-start; margin-top:1.1rem;">
+
+                    <!-- links: neues Geschenk -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Neuen Wunsch speichern</h3>
+
+                        <label style="font-size:.8rem;" for="giftTitle">Name vom Geschenk</label>
+                        <input id="giftTitle" type="text" placeholder="z.B. Kamera, Tasche..."
+                            style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:#0b1220; color:white; margin-bottom:.5rem;">
+
+                        <label style="font-size:.8rem;" for="giftLink">Link (optional)</label>
+                        <input id="giftLink" type="url" placeholder="https://..."
+                            style="width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:#0b1220; color:white; margin-bottom:.5rem;">
+
+                        <label style="font-size:.8rem;" for="giftImage">Foto (optional, aber wäre super)</label>
+                        <input id="giftImage" type="file" accept="image/*" style="width:100%; margin-bottom:.6rem;">
+
+                        <button id="giftAddBtn"
+                            style="width:100%; background:#10a329; border:none; border-radius:10px; padding:.55rem 1rem; color:#001018; font-weight:600; cursor:pointer;">
+                            Speichern
+                        </button>
+                        <p id="giftAddMsg" style="margin-top:.4rem; font-size:.85rem;"></p>
+                    </div>
+
+                    <!-- rechts: Liste -->
+                    <div
+                        style="background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); border-radius:14px; padding:1rem; min-width:260px; flex:1;">
+                        <h3>Gespeicherte Wünsche</h3>
+                        <ul id="giftList"
+                            style="list-style:none; padding-left:0; margin-top:.4rem; max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:.5rem;">
+                            <!-- per JS gefüllt -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
 
 
         </main>
