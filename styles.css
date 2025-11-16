@@ -1256,3 +1256,179 @@ footer {
     text-overflow: ellipsis;
     /* falls Text zu lang ist, ... anzeigen */
 }
+
+/* ==================== Vollbild-Intro nach Login ==================== */
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4000;
+}
+
+.intro-overlay.hidden {
+    display: none;
+}
+
+/* Inhalt komplett mittig im Bildschirm */
+.intro-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Text + Button untereinander */
+    align-items: center;
+    /* horizontal zentriert */
+    justify-content: center;
+    /* vertikal zentriert */
+}
+
+
+/* großer Bereich für Text + Herz */
+.intro-heart-bg {
+    position: relative;
+    width: min(70vw, 1100px);
+    height: min(60vh, 650px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-40px);
+    /* Herz leicht nach oben */
+}
+
+
+
+/* Herz-Partikel Schicht */
+.heart-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 0 12px rgba(255, 30, 106, 1));
+}
+
+/* einzelne kleinen Herzchen */
+.heart-dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(calc(-50% + var(--tx) * 1px),
+            calc(-50% + var(--ty) * 1px));
+    opacity: 0.85;
+    animation: heartGlow 2.8s ease-in-out infinite alternate;
+}
+
+/* Herzsymbol */
+.heart-dot::before {
+    content: "❤";
+    display: block;
+    font-size: 26px;
+    /* größer */
+    color: #ff1e6a;
+    text-shadow: 0 0 18px rgba(255, 30, 106, 1);
+}
+
+/* Glow Animation */
+@keyframes heartGlow {
+    0% {
+        opacity: 0.4;
+        transform: translate(calc(-50% + var(--tx) * 1px),
+                calc(-50% + var(--ty) * 1px)) scale(0.92);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--tx) * 1px),
+                calc(-50% + var(--ty) * 1px)) scale(1.12);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: translate(calc(-50% + var(--tx) * 1px),
+                calc(-50% + var(--ty) * 1px)) scale(1);
+    }
+}
+
+/* Text in der Mitte vor dem Herz */
+.intro-text {
+    position: relative;
+    z-index: 2;
+    font-size: clamp(2rem, 3vw, 3rem);
+    text-align: center;
+    font-weight: 700;
+    max-width: 26ch;
+    color: #a10d64e0;
+    /* ggf. größer machen, z.B. 32ch */
+    line-height: 1.2;
+}
+
+
+/* Fade-in, wird durch JS ausgelöst */
+.intro-text.show {
+    animation: introFadeIn 1.2s forwards;
+}
+
+@keyframes introFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-buttons {
+    margin-top: 1.5rem;
+}
+
+
+.intro-start-btn {
+    padding: 0.7rem 1.6rem;
+    border-radius: 9999px;
+    border: none;
+    background: #10a329;
+    color: #001018;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.intro-start-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.intro-center {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.intro-skip-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0.45rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ff1e6a;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    backdrop-filter: blur(4px);
+    transition: 0.2s ease;
+    z-index: 5000;
+}
+
+.intro-skip-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}

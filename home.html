@@ -16,6 +16,34 @@
 
 <body class="needs-auth">
 
+    <!-- ===================== INTRO-OVERLAY ===================== -->
+    <div class="intro-overlay hidden" id="introOverlay">
+        <button id="introSkipBtn" class="intro-skip-btn">Skip</button>
+
+        <div class="intro-content">
+
+            <div class="intro-heart-bg">
+                <!-- kleine Herzchen -->
+                <div class="heart-particles" id="heartParticles"></div>
+
+                <!-- Text + Button zusammen im Zentrum -->
+                <div class="intro-center">
+                    <div class="intro-text" id="introText">
+                        Also Selis, bist du bereit alles zu sehen? 🥺
+                    </div>
+
+                    <div class="intro-buttons">
+                        <button class="intro-start-btn" id="introStartBtn">
+                            Weiter 💚
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 
     <!-- nur fürs Handy sichtbarer Button -->
     <button id="mobileSidebarToggle" class="mobile-toggle" aria-label="Menü öffnen">
@@ -34,8 +62,6 @@
                 <h2 class="brand">Menü</h2>
                 <!-- der frühere kleine Toggle-Button wurde entfernt -->
             </div>
-
-
 
             <nav class="menu">
                 <button class="menu-item active" data-target="panel-willkommen">
@@ -215,7 +241,16 @@
 
                 </p>
                 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                <p> <strong>(15.11.2025)</strong>
+                    Ich hab jetzt eine Woche Pause gehabt, und ich hab immer noch nicht viele Ideen. Du bist gerade in
+                    Istanbul und chillst da ochhh. Ich muss immer noch die ganzen Listen füllen. Das wird so lange
+                    dauern ufff. Ich hab richtig bock weiter zu programmieren, aber ich hab keine Ideen mehr :(
+                    <br> Ich frage mich echt was ich noch tun soll.
+                    <br> Okkkk ich habe jetzt die Anfangssequenz eingebaut und bisschen die Random Zettel für Date und
+                    Essen verbessert. Ich mache bestimmt noch paar Verschönerungen. Ich muss jetzt nurnoch alles auf
+                    GitHub hochladen.
 
+                </p>
             </section>
 
             <!------------------------------------------------------ PANELS ------------------------------------------------------->
@@ -715,6 +750,15 @@
                     <button id="closeModal" class="close-btn">Schließen</button>
                 </div>
             </div>
+
+            <!-- Allgemeines Popup für Essen & Date-Ideen -->
+            <div id="popupModal" class="modal hidden" role="dialog" aria-modal="true">
+                <div class="modal-card">
+                    <p id="popupText"></p>
+                    <button id="popupClose" class="close-btn">Schließen</button>
+                </div>
+            </div>
+
 
             <!-- Ladescreen -->
             <div id="loader" class="loader hidden" role="alert" aria-live="polite">

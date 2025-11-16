@@ -96,12 +96,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const signupBtn = document.getElementById("signupBtn");
     const signupMsg = document.getElementById("signupMsg");
 
+    // Enter auf den LOGIN-Feldern => Login auslösen
+    if (loginIdentity && loginPassword && loginBtn) {
+        [loginIdentity, loginPassword].forEach(inp => {
+            inp.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    loginBtn.click();
+                }
+            });
+        });
+    }
+
+    // Enter auf den SIGNUP-Feldern => Signup auslösen (optional)
+    if (regEmail && regUsername && regPassword && signupBtn) {
+        [regEmail, regUsername, regPassword].forEach(inp => {
+            inp.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    signupBtn.click();
+                }
+            });
+        });
+    }
+
+
     // LOGIN
     if (loginBtn) {
         loginBtn.addEventListener("click", async () => {
             loginMsg.textContent = "";
             try {
                 await signInByEmailOrUsername(loginIdentity.value.trim(), loginPassword.value.trim());
+                // Nach Login → Intro anzeigen statt direkt Seite öffnen
+                sessionStorage.setItem("showIntro", "true");
                 window.location.href = "home.html";
             } catch (err) {
                 console.error(err);
@@ -128,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
 
 async function supabaseLogout() {
     if (!supabaseClient) return;
@@ -348,6 +376,31 @@ function closeModal() { modal.classList.add("hidden"); }
 function showLoader() { loader.classList.remove("hidden"); }
 function hideLoader() { loader.classList.add("hidden"); }
 
+// ===== Allgemeines Popup für Essen & Date-Ideen =====
+const popupModal = document.getElementById("popupModal");
+const popupText = document.getElementById("popupText");
+const popupClose = document.getElementById("popupClose");
+
+function showPopup(msg) {
+    if (!popupModal || !popupText) return;
+    popupText.textContent = msg;
+    popupModal.classList.remove("hidden");
+}
+
+function hidePopup() {
+    if (!popupModal) return;
+    popupModal.classList.add("hidden");
+}
+
+if (popupClose) popupClose.addEventListener("click", hidePopup);
+popupModal?.addEventListener("click", (e) => {
+    if (e.target === popupModal) hidePopup();
+});
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") hidePopup();
+});
+
+
 function matchesSecret() {
     const a = (fieldA.value || "").trim().toLowerCase();
     const b = (fieldB.value || "").trim().toLowerCase();
@@ -404,6 +457,41 @@ if (closeBt) closeBt.addEventListener("click", closeModal);
 modal?.addEventListener("click", e => { if (e.target === modal) closeModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
+function createHeartParticles() {
+    const container = document.getElementById('heartParticles');
+    if (!container) return;
+
+    container.innerHTML = ""; // falls Intro neu gezeigt wird
+
+    const points = 140;      // Anzahl der Herzchen
+    const scale = 32;         // Größe des Herzens
+
+    for (let i = 0; i < points; i++) {
+        const t = (Math.PI * 2 * i) / points;
+
+        // klassische Herz-Gleichung
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y =
+            13 * Math.cos(t) -
+            5 * Math.cos(2 * t) -
+            2 * Math.cos(3 * t) -
+            Math.cos(4 * t);
+
+        const dot = document.createElement('div');
+        dot.className = 'heart-dot';
+
+        // Position ins CSS schieben (werden in der Animation benutzt)
+        dot.style.setProperty('--tx', (x * scale).toString());
+        dot.style.setProperty('--ty', (-y * scale).toString()); // minus, weil y oben/unten invertiert ist
+
+        // random Delay, damit es lebendiger wirkt
+        dot.style.animationDelay = (Math.random() * 2).toFixed(2) + 's';
+
+        container.appendChild(dot);
+    }
+}
+
+
 // ========================================================= Glücksrad ==========================================================
 const wheelCanvas = document.getElementById("wheelCanvas");
 if (wheelCanvas) {
@@ -425,7 +513,7 @@ if (wheelCanvas) {
         "Du schuldest mir was 😉",
         "Ich singe für dich 🎤",
         "Dummes Foto für Sticker 🤳",
-        "Hi", 
+        "Hi",
         "bye"
     ];
 
@@ -1094,6 +1182,8 @@ async function drawEssenZettel() {
 
     const random = data[Math.floor(Math.random() * data.length)];
     outEl.textContent = "→ " + random.text;
+    showPopup("Heute essen wir: " + random.text);
+
 }
 
 async function deleteEssenZettel(id, category = "hauptspeise") {
@@ -1124,6 +1214,18 @@ document.addEventListener("DOMContentLoaded", () => {
             addEssenZettel(val);
         });
     }
+
+    // Enter-Taste im Essen-Eingabefeld => Speichern
+    const essenInput = document.getElementById("essenInput");
+    if (essenInput && addBtn) {
+        essenInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                addBtn.click();
+            }
+        });
+    }
+
 
     if (drawBtn) {
         drawBtn.addEventListener("click", () => {
@@ -1260,6 +1362,8 @@ async function drawDateIdee() {
 
     const random = data[Math.floor(Math.random() * data.length)];
     outEl.textContent = "→ " + random.text;
+    showPopup("Eure Date-Idee: " + random.text);
+
 }
 
 async function deleteDateIdee(id) {
@@ -1291,6 +1395,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Enter-Taste im Date-Ideen-Eingabefeld => Speichern
+    const dateInput = document.getElementById("dateInput");
+    if (dateInput && addBtn) {
+        dateInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                addBtn.click();
+            }
+        });
+    }
+
+
     if (drawBtn) {
         drawBtn.addEventListener("click", () => {
             drawDateIdee();
@@ -1304,6 +1420,79 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     }
 });
+
+// ==================== INTRO-SEQUENZ NACH LOGIN ====================
+document.addEventListener("DOMContentLoaded", () => {
+    const introOverlay = document.getElementById("introOverlay");
+    if (!introOverlay) return; // auf index.html z.B. gibt es das nicht
+    introOverlay.classList.remove("hidden");   // <--- NEU: Intro immer sichtbar machen
+
+
+    createHeartParticles();
+
+    const introText = document.getElementById("introText");
+    const introStartBtn = document.getElementById("introStartBtn");
+
+    if (!introText || !introStartBtn) {
+        introOverlay.classList.add("hidden");
+        return;
+    }
+
+    // Die Sätze, die nacheinander erscheinen
+    const introSlides = [
+        "Hellooo Selissss 💚",
+        "Ich hab etwas für dich gemacht",
+        "Eine kleine eigene Welt für dich, für uns, mit Sachen, die nur wir beide nutzen können.",
+        "Damit du immer etwas hast, das dich lächeln lässt.",
+        "Weil du für mich das Wichtigste bist, herseyimsin",
+        "Also Selis, bist du bereit alles zu sehen?🥹"
+    ];
+
+    let index = 0;
+    let timer = null;
+
+    function showSlide() {
+        // Animation neu triggern
+        introText.classList.remove("show");
+        void introText.offsetWidth; // force reflow
+        introText.textContent = introSlides[index];
+        introText.classList.add("show");
+    }
+
+    function finishIntro() {
+        if (timer) clearInterval(timer);
+        introOverlay.classList.add("hidden");
+        sessionStorage.removeItem("showIntro");
+    }
+
+    // Start-Button zuerst ausblenden
+    introStartBtn.classList.remove("visible");
+
+    // ersten Satz anzeigen
+    showSlide();
+
+    // alle 5 Sekunden zum nächsten Satz
+    timer = setInterval(() => {
+        index++;
+        if (index >= introSlides.length) {
+            clearInterval(timer);
+            // Am Ende: Button anzeigen
+            introStartBtn.classList.add("visible");
+        } else {
+            showSlide();
+        }
+    }, 6000); // 5 Sekunden
+
+    // „Los geht's“ schließt das Intro
+    introStartBtn.addEventListener("click", finishIntro);
+    const introSkipBtn = document.getElementById("introSkipBtn");
+    if (introSkipBtn) {
+        introSkipBtn.addEventListener("click", finishIntro);
+    }
+
+
+});
+
 
 
 
